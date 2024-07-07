@@ -10,7 +10,7 @@ import InGameLayout from '@/layouts/InGame';
 
 import LoadingRoom from '@/screens/LoadingRoom';
 import StartScreen from '@/screens/Start';
-import InGameScreen from '@/screens/InGame';
+import Game from '@/screens/InGame/tictactoe';
 
 async function initializeSdk() {
 	try {
@@ -100,9 +100,8 @@ export const GameRouter = () => {
 						)
 					}
 				/>
-				<Route path="game" element={<InGameLayout />}>
-					<Route path="new" element={<InGameScreen />} />
-				</Route>
+					<Route path="new" element={<Game />} />
+				
 			</Route>
 		</Routes>
 	);

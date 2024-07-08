@@ -23,7 +23,7 @@ const Root = () => {
 
 	const _preloadAssets = async () => {
 		await preloadAssets()
-		setIsLoadingAssets(false)
+		setIsLoadingAssets(true)
 	}
 
 	useEffect(() => {

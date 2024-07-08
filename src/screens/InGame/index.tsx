@@ -1,11 +1,13 @@
 import { Outlet } from 'react-router-dom';
+import Game from './tictactoe';
 
 const InGameScreen = () => {
 
 	return (
 		<>
-			<div className='flex flex-col'>
-                In game!
+			<div>
+                
+				<Game />
 			</div>
 			<Outlet />
 		</>

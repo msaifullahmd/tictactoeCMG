@@ -10,7 +10,7 @@ import InGameLayout from '@/layouts/InGame';
 
 import LoadingRoom from '@/screens/LoadingRoom';
 import StartScreen from '@/screens/Start';
-import Game from '@/screens/InGame/tictactoe';
+import InGameScreen from '@/screens/InGame';
 
 async function initializeSdk() {
 	try {
@@ -23,7 +23,8 @@ async function initializeSdk() {
             	: {};
 
 		try {
-			await insertCoin({
+			await insertCoin(
+				{
 				...baseUrlOptions,
 			});
 		} catch (error) {
@@ -99,8 +100,10 @@ export const GameRouter = () => {
 							<StartScreen />
 						)
 					}
-				/>
-					<Route path="new" element={<Game />} />
+				/> 
+				<Route path="game" element={<InGameLayout/>}>
+					<Route path="new" element={<InGameScreen />} />
+				</Route>
 				
 			</Route>
 		</Routes>

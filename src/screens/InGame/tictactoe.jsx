@@ -1,40 +1,44 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './styles.css';
+import { useMultiplayerState, useIsHost } from 'playroomkit';
 
-type SquareProps = {
-  value: string | null;
-  onClick: () => void;
-};
-
-const Square: React.FC<SquareProps> = ({ value, onClick }) => (
+const Square = ({ value, onClick }) => (
   <button className="square" onClick={onClick}>
     {value}
   </button>
 );
 
-const Game: React.FC = () => {
-  const [squares, setSquares] = useState<Array<string | null>>(Array(9).fill(null));
-  const [isXNext, setIsXNext] = useState(true);
+const Game = () => {
+  const [gameState, setGameState] = useMultiplayerState('gameState', {
+    squares: Array(9).fill(null),
+    isXNext: true,
+  });
+  const isHost = useIsHost();
 
-  const handleClick = (i: number) => {
-    if (calculateWinner(squares) || squares[i]) return; // Prevent click if game is over or square is filled
-    const newSquares = squares.slice();
-    newSquares[i] = isXNext ? 'X' : 'O';
-    setSquares(newSquares);
-    setIsXNext(!isXNext);
+  const handleClick = (i) => {
+    if (calculateWinner(gameState.squares) || gameState.squares[i]) return;
+    if (isHost !== gameState.isXNext) return; // Prevent move if it's not your turn
+    const newSquares = gameState.squares.slice();
+    newSquares[i] = gameState.isXNext ? 'X' : 'O';
+    setGameState({
+      squares: newSquares,
+      isXNext: !gameState.isXNext,
+    });
   };
 
   const resetGame = () => {
-    setSquares(Array(9).fill(null));
-    setIsXNext(true);
+    setGameState({
+      squares: Array(9).fill(null),
+      isXNext: true,
+    });
   };
 
-  const renderSquare = (i: number) => (
-    <Square value={squares[i]} onClick={() => handleClick(i)} />
+  const renderSquare = (i) => (
+    <Square value={gameState.squares[i]} onClick={() => handleClick(i)} />
   );
 
-  const winner = calculateWinner(squares);
-  const status = winner ? `Winner: ${winner}` : `Next player: ${isXNext ? 'X' : 'O'}`;
+  const winner = calculateWinner(gameState.squares);
+  const status = winner ? `Winner: ${winner}` : `Next player: ${gameState.isXNext ? 'X' : 'O'}`;
 
   return (
     <div className="game">
@@ -61,7 +65,7 @@ const Game: React.FC = () => {
   );
 };
 
-function calculateWinner(squares: Array<string | null>): string | null {
+function calculateWinner(squares) {
   const lines = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8],
     [0, 3, 6], [1, 4, 7], [2, 5, 8],

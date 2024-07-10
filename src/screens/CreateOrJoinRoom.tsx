@@ -7,12 +7,12 @@ const CreateOrJoinRoom = () => {
     const navigate = useNavigate()
 
     const handleCreateRoom = () => {
-        navigate('/play')
+        navigate('/lobby')
     }
 
     const handleJoinRoom = () => {
         const roomCode = prompt('Enter room code')
-        if (roomCode) navigate('/play#r=R' + roomCode)
+        if (roomCode) navigate('/eeeplay#r=R' + roomCode)
     }
 
     return (

@@ -11,7 +11,7 @@ const StartScreen = () => {
     const myPlayerState = myPlayer()
 
 	const handleStartGame = () => {
-		navigate('/play/game/new')
+		navigate('/lobby/play/game/new')
 	}
 
     useEffect(() => {

@@ -19,7 +19,7 @@ import LoadingGame from './screens/LoadingGame';
 
 const Root = () => {
 
-	const [isLoadingAssets, setIsLoadingAssets] = useState(true)
+	const [isLoadingAssets, setIsLoadingAssets] = useState(false)
 
 	const _preloadAssets = async () => {
 		await preloadAssets()

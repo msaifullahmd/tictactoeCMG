@@ -17,7 +17,7 @@ const Game = () => {
 
   const handleClick = (i) => {
     if (calculateWinner(gameState.squares) || gameState.squares[i]) return;
-    if (isHost !== gameState.isXNext) return; // Prevent move if it's not your turn
+    if (isHost !== gameState.isXNext) return; 
     const newSquares = gameState.squares.slice();
     newSquares[i] = gameState.isXNext ? 'X' : 'O';
     setGameState({

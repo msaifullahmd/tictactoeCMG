@@ -11,6 +11,8 @@ import InGameLayout from '@/layouts/InGame';
 import LoadingRoom from '@/screens/LoadingRoom';
 import StartScreen from '@/screens/Start';
 import InGameScreen from '@/screens/InGame';
+import CustomCreateOrJoinRoom from '@/screens/CustomCreateOrJoinRoom';
+import CreateOrJoinRoom from '@/screens/CreateOrJoinRoom';
 
 async function initializeSdk() {
 	try {
@@ -25,6 +27,8 @@ async function initializeSdk() {
 		try {
 			await insertCoin(
 				{
+					skipLobby: true,
+					maxPlayersPerRoom: 2,
 				...baseUrlOptions,
 			});
 		} catch (error) {
@@ -97,10 +101,11 @@ export const GameRouter = () => {
 						!isSdkInitialized ? (
 							<LoadingRoom />
 						) : (
-							<StartScreen />
+							<CreateOrJoinRoom />
 						)
 					}
 				/> 
+				<Route path="lobby" element={<CustomCreateOrJoinRoom/>}/>
 				<Route path="game" element={<InGameLayout/>}>
 					<Route path="new" element={<InGameScreen />} />
 				</Route>
